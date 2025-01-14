@@ -226,7 +226,7 @@ This design is both **scalable** (each microservice can be independently deploye
 
 By tackling these steps, the PoC can evolve into a **production-grade** booking ingestion service.
 
-## 5. Additional Notes
+## 6. Additional Notes
 * **CORS Handling**: Right now, CORS is not currently implemented for specific frontend origins, which may lead to CORS errors when accessing the API from different domains. This should be modified to allow requests from the appropriate frontend origin(s) to ensure smooth communication between the frontend and backend.
 * **Error Handling**: Right now, errors are handled at a minimal level. For a production environment, we need more robust error handling and logging.
 * **Data Validation**: Add third party libraries for stricter input validation if needed.
