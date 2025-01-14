@@ -175,6 +175,7 @@ Below is a quick reference for the endpoints we currently support. Each endpoint
   > }
   > ```
 ## 4. Additional Notes
+* **CORS Handling**: Right now, CORS is not currently implemented for specific frontend origins, which may lead to CORS errors when accessing the API from different domains. This should be modified to allow requests from the appropriate frontend origin(s) to ensure smooth communication between the frontend and backend.
 * **Error Handling**: Right now, errors are handled at a minimal level. For a production environment, we need more robust error handling and logging.
 * **Data Validation**: Add third party libraries for stricter input validation if needed.
 * **Security**: Future enhancements might include HTTPS, JWT-based authentication, or role-based access control.
