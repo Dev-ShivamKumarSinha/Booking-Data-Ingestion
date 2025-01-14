@@ -174,7 +174,59 @@ Below is a quick reference for the endpoints we currently support. Each endpoint
   >   "message": "Booking not found"
   > }
   > ```
-## 4. Additional Notes
+## 4. Sequence Diagram
+### 4.1 Overview
+* A microservice built with **Node.js** + **Express** and the **official MongoDB Node.js driver** for database operations.
+* **Core Components**:
+   1. **Express Server** – Handles incoming requests, routes them to controllers.
+   2. **Controllers** – Contain the business logic (create, retrieve, delete bookings).
+   3. **Database Connection** – Established via MongoDB client, providing a reference to the bookings collection.
+   4. **.env / Config** – Stores sensitive or environment-specific details (e.g., MONGO_URI).
+      
+### 4.2 Data Flow Summary
+1. **Client** sends an HTTP request (e.g., `POST /bookings`).
+2. **Express** routes it to the appropriate controller function (`createBooking, getAllBookings, getBookingById, deleteBooking`).
+3. The **controller** performs:
+   * Validation and normalization (e.g., ensure `bookingDate` is valid).
+   * Database operation (insert, query, delete).
+4. **MongoDB** executes the operation and returns the result (success or error).
+5. **Controller** constructs a JSON response with relevant status codes and messages.
+6. **Express** returns the response to the **client**.
+This design is both **scalable** (each microservice can be independently deployed) and **extensible** (we can add more endpoints or integrate more data sources).
+
+### 4.3 Sample Sequence Diagram
+![image](https://github.com/user-attachments/assets/2fbc93a2-ac4c-4a09-850f-8fcd135c4302)
+
+## 5. Roadmap
+
+1. **Multiple Data Sources**  
+   - Support ingestion from CSV/Excel, XML, or external REST APIs.  
+
+2. **Scalability**  
+   - Containerize the microservice with Docker.  
+   - Use Kubernetes to handle higher traffic and failover.  
+   - Consider MongoDB sharding for very large data volumes.
+
+3. **Enhanced Error Handling**  
+   - Implement custom error classes, robust validation with third party libraries.  
+   - Introduce retry logic for transient network/DB issues.  
+   - Implement logging and monitoring.
+
+4. **Security**  
+   - For production, implement HTTPS (TLS) and authentication (JWT, OAuth2).  
+   - Add role-based access control (RBAC) if different user roles are needed.  
+   - Encrypt sensitive data at rest and in transit.
+
+5. **Caching & Performance**  
+   - Use Redis for caching frequently accessed booking records.  
+   - Introduce request rate-limiting or circuit breakers if needed.
+
+6. **Observability & Tracing**  
+   - Collect metrics (e.g., request count, DB latency) for dashboards.
+
+By tackling these steps, the PoC can evolve into a **production-grade** booking ingestion service.
+
+## 5. Additional Notes
 * **CORS Handling**: Right now, CORS is not currently implemented for specific frontend origins, which may lead to CORS errors when accessing the API from different domains. This should be modified to allow requests from the appropriate frontend origin(s) to ensure smooth communication between the frontend and backend.
 * **Error Handling**: Right now, errors are handled at a minimal level. For a production environment, we need more robust error handling and logging.
 * **Data Validation**: Add third party libraries for stricter input validation if needed.
